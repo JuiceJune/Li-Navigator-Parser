@@ -1,0 +1,64 @@
+p {
+    margin: 0;
+}
+
+.container{
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: #b9b9b9 1px solid;
+}
+
+.projectName {
+
+}
+
+.sheetLink{
+
+}
+
+.sheetName {
+
+}
+
+.columnRedactor {
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+.column {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: #b9b9b9 1px solid;
+    padding: 0 5px;
+}
+
+.columnHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px 5px 10px;
+    border: #b9b9b9 1px solid;
+    border-bottom: none;
+    background-color: #77cfaa;
+}
+
+.columnName {
+    width: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.dataName {
+
+}
+
+.switcher {
+
+}
+
+.collapsibleBody{
+    padding: 0;
+}
+

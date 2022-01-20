@@ -1,0 +1,33 @@
+.copyBtnDiv {
+    position: fixed;
+    z-index: 100000;
+    top: 30px;
+    left: 30px;
+}
+
+.copyBtn {
+    height: 46px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    border: #b9b9b9 2px solid;
+}
+
+.copyBtn:hover {
+    background: white;
+    color: #000000;
+}
+
+.panelBlockContainer {
+    height: 100px;
+    width: 100px;
+    z-index: 100000;
+    top: 50px;
+    right: 50px;
+    position: absolute;
+    background-color: #f1f1f1;
+    border: 1px solid #d3d3d3;
+    text-align: center;
+    cursor: move;
+}
+

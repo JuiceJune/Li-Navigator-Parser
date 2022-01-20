@@ -1,0 +1,14 @@
+.linkBlock {
+    width: 100%;
+    height: 65px;
+    text-align: center;
+    border: #949494 1px solid;
+    cursor: copy;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+
+.linkText {
+    font-size: 14px;
+    color: #696969;
+}

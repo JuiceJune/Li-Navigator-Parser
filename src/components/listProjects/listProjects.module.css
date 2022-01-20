@@ -1,0 +1,47 @@
+p {
+    margin: 0;
+}
+
+.container{
+
+}
+
+.headListProjects {
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.projectsContainer{
+
+}
+
+.projectBlock {
+    padding: 10px 8px;
+    border: #b9b9b9 1px solid;
+    margin-bottom: 5px;
+}
+
+.currentProjectBlock {
+    font-size: 16px;
+    border: #b9b9b9 1px solid;
+    padding: 16px;
+    margin-top: 10px;
+}
+
+.project {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnBlock {
+
+}
+
+.projectName {
+    color: black;
+}
+
+.label {
+    align-self: center;
+}
