@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import style from './email.module.css'
 import {connect} from 'react-redux';
 import {hideAlert, setAlertText, setAlertType} from '../../store/ActionCreators/appActions';
-const linkBlock = document.getElementById('linkBlock')
-const linkText = document.getElementById('linkText')
 
 
 const Email = () => {

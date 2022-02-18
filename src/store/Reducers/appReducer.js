@@ -1,4 +1,4 @@
-import {HIDE_ALERT, LOGIN_USER, SET_ALERT_TEXT, SET_ALERT_TYPE} from '../types'
+import {HIDE_ALERT, SET_ALERT_TEXT, SET_ALERT_TYPE} from '../types'
 
 const initialState = {
   alertText: null,

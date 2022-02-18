@@ -1,3 +1,4 @@
+/*global chrome*/
 import React, {useEffect, useState} from 'react';
 import style from './createProject.module.css'
 import M from 'materialize-css'
@@ -20,6 +21,33 @@ const CreateProject = (props) => {
 
 	const columnName = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
+	useEffect(() => {
+		getInfo()
+	}, [])
+
+	async function getInfo() {
+		chrome.storage.sync.get(['projectName', 'sheetLink', 'sheetName', 'columnSettings'], function(result) {
+			if(result.projectName) {
+				updateProjectName(result.projectName)
+			}
+			if(result.sheetLink) {
+				updateSheetLink(result.sheetLink)
+			}
+			if(result.sheetName) {
+				updateSheetName(result.sheetName)
+			}
+			if(result.columnSettings) {
+				updateColumnSettings(result.columnSettings)
+			}
+		});
+	}
+
+	async function cleanStorage() {
+		chrome.storage.sync.set({projectName: null, sheetLink: null, sheetName: null, columnSettings: null},
+			function(result){
+				console.log('CleanFunc')
+		});
+	}
 
 	let newProjectName = React.createRef();
 	let newSheetLink = React.createRef();
@@ -57,8 +85,40 @@ const CreateProject = (props) => {
 		setTimeout(() => {
 			hideAlert()
 		}, 3000)
+		cleanStorage()
+		updateProjectName('')
+		updateSheetLink('')
+		updateSheetName('')
 	}
 
+	async function saveProjectName(value) {
+
+		chrome.storage.sync.set({'projectName': value}, function() {
+			console.log('Value is set to ' + value);
+		});
+	}
+
+	async function saveSheetLink(value) {
+
+		chrome.storage.sync.set({'sheetLink': value}, function() {
+			console.log('Value is set to ' + value);
+		});
+	}
+
+	async function saveSheetName(value) {
+
+		chrome.storage.sync.set({'sheetName': value}, function() {
+			console.log('Value is set to ' + value);
+		});
+	}
+
+	async function saveColumnSettings(columnSettings) {
+		await chrome.storage.sync.get({columnSettings: []}, function(result) {
+			chrome.storage.sync.set({
+				columnSettings: columnSettings
+			});
+		})
+	}
 
 	return (
 		<div className={style.container}>
@@ -70,7 +130,10 @@ const CreateProject = (props) => {
 						   className="validate"
 						   value={projectName}
 						   ref={newProjectName}
-						   onChange={() => updateProjectName(newProjectName.current.value)}
+						   onChange={async () => {
+							   updateProjectName(newProjectName.current.value)
+							   await saveProjectName(newProjectName.current.value)
+						   }}
 					/>
 				</label>
 			</div>
@@ -82,7 +145,10 @@ const CreateProject = (props) => {
 						   className="validate"
 						   value={sheetLink}
 						   ref={newSheetLink}
-						   onChange={() => updateSheetLink(newSheetLink.current.value)}
+						   onChange={async () => {
+							   updateSheetLink(newSheetLink.current.value)
+							   await saveSheetLink(newSheetLink.current.value)
+						   }}
 					/>
 				</label>
 			</div>
@@ -94,7 +160,10 @@ const CreateProject = (props) => {
 						   className="validate"
 						   value={sheetName}
 						   ref={newSheetName}
-						   onChange={() => updateSheetName(newSheetName.current.value)}
+						   onChange={async () => {
+							   updateSheetName(newSheetName.current.value)
+							   await saveSheetName(newSheetName.current.value)
+						   }}
 					/>
 				</label>
 			</div>
@@ -109,7 +178,10 @@ const CreateProject = (props) => {
 						<div key={item.data} className={style.column}>
 							<div className={style.columnName}>
 								<div id={item.data}>
-									<Select onChange={event => {selectHandler(event, item)} }>
+									<Select onChange={event => {
+										selectHandler(event, item)
+										saveColumnSettings(columnSetting)
+									} }>
 										<option value='#' selected={true}>#</option>
 										{columnName && columnName.map((item) => {
 											return (
@@ -130,7 +202,10 @@ const CreateProject = (props) => {
 									<label>
 										<input type="checkbox"
 											   checked={item.state}
-											   onClick={() => {radioHandler(item, index)}}
+											   onClick={() => {
+												   radioHandler(item, index)
+												   saveColumnSettings(columnSetting)
+											   }}
 										/>
 										<span className="lever"></span>
 									</label>

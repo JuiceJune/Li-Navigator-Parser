@@ -31,3 +31,21 @@
     cursor: move;
 }
 
+.alertContainer {
+    padding: 5px 15px;
+    background-color: #292929;
+    color: white;
+    position: fixed;
+    z-index: 100000;
+    bottom: 30px;
+    left: 30px;
+}
+
+.goodAlert{
+    background-color:#77cfaa;
+}
+
+.badAlert{
+    background-color: #cf412e;
+}
+

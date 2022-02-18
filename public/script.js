@@ -23,36 +23,36 @@ async function getData() {
 			setTimeout(() => {
 				document.querySelector('div[data-control-name="copy_linkedin"]').click()
 				resolve(true)
-			}, 1500)
+			}, 1100)
 		});
 	}
 	function getLocationElement() {
 		const ember41 = document.getElementById('ember41')
-		let location = 'null';
+		let location = '---Company location---';
 		if(ember41) {
 			location = ember41.querySelectorAll('[data-anonymize="location"]');
 			if(location.length > 0) {
 				location = location[0].innerText.trim()
 			}
 			else{
-				location = 'null'
+				location = '---Company location---'
 			}
 		}
 		return location
 	}
 	function getIndustryElement() {
 		const ember41 = document.getElementById('ember41')
-		let location = 'null';
+		let industry = '---Industry---';
 		if(ember41) {
-			location = ember41.querySelectorAll('[data-anonymize="industry"]');
-			if(location.length > 0) {
-				location = location[0].innerText.trim()
+			industry = ember41.querySelectorAll('[data-anonymize="industry"]');
+			if(industry.length > 0) {
+				industry = industry[0].innerText.trim()
 			}
 			else{
-				location = 'null'
+				industry = '---Industry---'
 			}
 		}
-		return location
+		return industry
 	}
 
 	let arr = [];
@@ -72,27 +72,27 @@ async function getData() {
 			arr.push(getFirstName(fulNameElement))
 			arr.push(getSecondName(fulNameElement))
 		})() : (() => {
-			arr.push("First name")
-			arr.push("Second name")
+			arr.push("---First name---")
+			arr.push("---Second name---")
 		})()
-		titleElement ? arr.push(titleElement.innerText) : (() => {
-			arr.push("Tittle")
+		titleElement ? arr.push(titleElement.innerText.trim()) : (() => {
+			arr.push("---Tittle---")
 		})()
 		connectionsElement ? arr.push(getConnections(connectionsElement)) : (() => {
-			arr.push("Connections")
+			arr.push("---Connections---")
 		})()
-		companyElement ? arr.push(companyElement.innerText) : (() => {
-			arr.push("Company name")
-		})
+		companyElement ? arr.push(companyElement.innerText.trim()) : (() => {
+			arr.push("---Company name---")
+		})()
 		industryElement ? arr.push(industryElement) : (() => {
-			arr.push("Industry")
+			arr.push("---Industry---")
 		})()
 		companyLocationElement ? arr.push(companyLocationElement) : (() => {
-			arr.push("Company location")
-		})
+			arr.push("---Company location---")
+		})()
 		leadLocationElement ? arr.push(leadLocationElement.innerText.trim()) : (() => {
-			arr.push("Lead location")
-		})
+			arr.push("---Lead location---")
+		})()
 
 
 		if(await getLinkedinLink(tripleDotBtnElement)) {
@@ -118,8 +118,9 @@ async function getData() {
 
 chrome.runtime.onMessage.addListener(gotMessage);
 
+
 function gotMessage(body, sender, sendResponse) {
-	alert(body.message)
+	showAlert(body.message)
 }
 
 function addBtn() {
@@ -135,9 +136,30 @@ function addBtn() {
 	btn.addEventListener("click", getData);
 }
 
+async function showAlert(data) {
+	let alertContainer = document.createElement('div')
+	alertContainer.className = 'alertContainer'
+	alertContainer.id = 'alertContainer'
+	if(data.status === 'ok') {
+		alertContainer.className += ' goodAlert'
+		alertContainer.innerText = data.message
+	}
+	else {
+		alertContainer.className += ' badAlert'
+		alertContainer.innerText = data.systemMessage + '\n' + data.adminMessage
+	}
+	document.body.appendChild(alertContainer)
+
+	setTimeout(() => {
+		const alert = document.getElementById('alertContainer')
+		alert.remove()
+	}, 5000)
+}
+
 window.onload = function() {
 	addBtn()
 };
+
 
 // Next level
 function optionalPanel() {
@@ -187,3 +209,5 @@ function dragElement(elmnt) {
 		document.onmousemove = null;
 	}
 }
+
+

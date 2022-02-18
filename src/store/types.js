@@ -1,7 +1,3 @@
-//-------------User Reducer----------------//
-export const LOGIN_USER = "AUTH_USER"
-
-
 //-------------App Reducer----------------/
 export const SET_ALERT_TEXT = 'SET_ALERT_TEXT'
 export const SET_ALERT_TYPE = 'SET_ALERT_TYPE'

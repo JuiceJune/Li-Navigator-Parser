@@ -1,7 +1,5 @@
-// const requestURL = 'http://localhost:8000/toSheet'
-const requestURL = 'https://safe-ocean-40366.herokuapp.com/toSheet'
+const requestURL = 'http://salesnashserver-env.eba-9mz2pw72.us-east-2.elasticbeanstalk.com/toSheet'
 const linkedInLink = "https://www.linkedin.com"
-const chromeExtension = "chrome-extension"
 const Projects = 'Projects'
 const CurrentProject = 'CurrentProject'
 const ColumnName = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -26,8 +24,8 @@ function sendRequest(method, url, body = null) {
 
 	return fetch(url, {
 		method: method,
-		//mode: 'no-cors', // It can be no-cors, cors, same-origin
-		//credentials: 'same-origin', // It can be include, same-origin, omit
+		// mode: 'no-cors', // It can be no-cors, cors, same-origin
+		// credentials: 'same-origin', // It can be include, same-origin, omit
 		headers: {
 			'content-type': 'application/json'
 		},
@@ -35,12 +33,7 @@ function sendRequest(method, url, body = null) {
 	}).then(data => {
 		return data.json();
 	}).then(data => {
-		if(data.status === "ok") {
-			sendToContent(data.message)
-		}
-		else {
-			sendToContent(data.systemMessage + "\n"+ data.adminMessage)
-		}
+		sendToContent(data)
 	}).catch(err => {
 		sendToContent(err.message)
 	})
